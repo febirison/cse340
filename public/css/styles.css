@@ -8,7 +8,7 @@
 /* Reset and Base Styles */
 * {
   box-sizing: border-box;
-  margin: -2;
+  margin: 0;
   padding: 0;
 }
 
@@ -40,52 +40,78 @@ body {
 
 /* Header Styles */
 #top-header {
-  display: flex;
+ /* display: flex; 
   justify-content: space-between;
-  align-items: center;
-  padding: 1rem;
-  overflow: hidden;
-  padding: 20px 30px;
+  align-items: center; */
+  padding: 1.5rem 0; /* Added top/bottom padding */
+ /* overflow: hidden;
+  padding: 20px 30px;*/
   background-color: var(--background);
 }
 
+.header-content {
+  display: flex;
+  justify-content: space-between; /* Pushes items to edges */
+  align-items: center; /* Vertically center items */
+  max-width: 1200px; /* Limits width for larger screens */
+  margin: 0 auto; /* Center the header content */
+  padding: 0 1rem; /* Add horizontal spacing from edges */
+}
+
 .siteName a {
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: bold;
   color: #000;
   text-decoration: none;
+}
+#tools{
+  margin-left: auto; /* Pushes tools to  far right */
 }
 
 #tools a {
   text-decoration: none;
   color: #000;
-  margin: 0 10px;
-  margin-right: 100px;
+  padding: 0.5rem 1rem; /* Add breathing room */
+  border: 1px solid #000;
+  border-radius: 5px;
+  transition: background-color 0.3s; /* Smooth hover effect */
+/*  margin: 0 10px;
+  margin-right: 100px;*/
 }
 
 #tools a:hover {
-  text-decoration: underline;
+  background-color: #f0f0f0;
 }
 
 /* Navigation Styles */
 #main-nav {
   background-color: #24253c;
+  
+}
+.nav-container {
+  max-width: 1200px; /* Match the header width */
+  margin: 0 auto; /* Center the container */
+  padding: 1rem; /* Add space from edges */
 }
 
 #main-nav ul {
   display: flex;
   list-style: none;
-  padding: 10px 0;
+  justify-content: center; /* Center the nav items */
+  gap: 1.5rem; /* Space between links */
+  max-width: 1200px; /* Limit width for larger screens */
+
 }
 
 #main-nav li {
-  margin: 0 0.5rem;
+ /* margin: 0 0.5rem;*/
 }
 
 #main-nav a {
   color: white;
   text-decoration: none;
   padding: 0.5rem;
+  transition: opacity 0.3s; /* Smooth hover effect */
 }
 
 #main-nav a:hover {
@@ -103,6 +129,8 @@ h1 {
 
 /* Delorean Showcase */
 #delorean-showcase {
+  display: flex;
+  flex-direction: column; /* Mobile image below text */
   position: relative;
   margin-bottom: 2rem;
   background-color: white;
@@ -175,7 +203,7 @@ h1 {
 
 .upgrades-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, 1fr); /* Mobile fist */
   gap: 0.5rem;
 }
 
@@ -234,6 +262,8 @@ footer {
   }
 }
 @media (min-width: 768px) {
+  .upgrades-grid { grid-template-columns: repeat(2, 1fr); }
+  #delorean-showcase { flex-direction: row; } /* Desktop image beside text */
     body {
         background-image: url('/images/site/small_check.jpg');
     }
