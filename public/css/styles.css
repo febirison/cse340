@@ -98,8 +98,10 @@ body {
   display: flex;
   list-style: none;
   justify-content: center; /* Center the nav items */
-  gap: 1.5rem; /* Space between links */
+  gap: 0.5rem; /* Space between links */
   max-width: 1200px; /* Limit width for larger screens */
+  padding: 0.5rem 1rem; /* Add padding */
+  
 
 }
 
