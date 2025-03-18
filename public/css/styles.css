@@ -4,3 +4,315 @@
 *:after {
   box-sizing: border-box;
 }
+
+/* Reset and Base Styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+}
+
+body {
+  color: #333;
+  background-color: white;
+}
+
+/* Wrapper and Container Styles */
+#wrapper {
+  max-width: 100%;
+  margin: 0 auto;
+  position: relative;
+  
+}
+
+/* Main content container with blue border */
+.main-container {
+  margin: 0 auto;
+  padding: 0.5rem;
+  border: 2px solid #00c3ff;
+  background-color: white;
+}
+
+/* Header Styles */
+#top-header {
+ /* display: flex; 
+  justify-content: space-between;
+  align-items: center; */
+  padding: 1.5rem 0; /* Added top/bottom padding */
+ /* overflow: hidden;
+  padding: 20px 30px;*/
+  background-color: var(--background);
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between; /* Pushes items to edges */
+  align-items: center; /* Vertically center items */
+  max-width: 1200px; /* Limits width for larger screens */
+  margin: 0 auto; /* Center the header content */
+  padding: 0 1rem; /* Add horizontal spacing from edges */
+}
+
+.siteName a {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #000;
+  text-decoration: none;
+}
+#tools{
+  margin-left: auto; /* Pushes tools to  far right */
+}
+
+#tools a {
+  text-decoration: none;
+  color: #000;
+  padding: 0.5rem 1rem; /* Add breathing room */
+  border: 1px solid #000;
+  border-radius: 5px;
+  transition: background-color 0.3s; /* Smooth hover effect */
+/*  margin: 0 10px;
+  margin-right: 100px;*/
+}
+
+#tools a:hover {
+  background-color: #f0f0f0;
+}
+
+/* Navigation Styles */
+#main-nav {
+  background-color: #24253c;
+  
+}
+.nav-container {
+  max-width: 1200px; /* Match the header width */
+  margin: 0 auto; /* Center the container */
+  padding: 1rem; /* Add space from edges */
+}
+
+#main-nav ul {
+  display: flex;
+  list-style: none;
+  justify-content: center; /* Center the nav items */
+  gap: 0.5rem; /* Space between links */
+  max-width: 1200px; /* Limit width for larger screens */
+  padding: 0.5rem 1rem; /* Add padding */
+  
+
+}
+
+#main-nav li {
+ /* margin: 0 0.5rem;*/
+}
+
+#main-nav a {
+  color: white;
+  text-decoration: none;
+  padding: 0.5rem;
+  transition: opacity 0.3s; /* Smooth hover effect */
+}
+
+#main-nav a:hover {
+  text-decoration: underline;
+}
+
+/* Main Content */
+main {
+  padding: 1rem;
+}
+
+h1 {
+  margin-bottom: 1rem;
+}
+
+/* Delorean Showcase */
+#delorean-showcase {
+  display: flex;
+  flex-direction: column; /* Mobile image below text */
+  position: relative;
+  margin-bottom: 2rem;
+  background-color: white;
+}
+
+.delorean-img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.delorean-details {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 1rem;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.delorean-details h2 {
+  color: #00c3ff;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.delorean-features {
+  list-style: none;
+  margin-bottom: 1rem;
+}
+
+.delorean-features li {
+  color: #00c3ff;
+  margin-bottom: 0.25rem;
+}
+
+#own-today {
+  background-color: #00c3ff;
+  color: #000;
+  border: none;
+  padding: 0.5rem 1.5rem;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* Content Container - Mobile First */
+.content-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* Reviews Section */
+#delorean-reviews {
+  order: 1; /* Shows first on mobile */
+}
+
+#delorean-reviews ul {
+  list-style: disc;
+  padding-left: 1.0rem;
+}
+
+#delorean-reviews li {
+  margin-bottom: 0.5rem;
+}
+
+/* Upgrades Section */
+#delorean-upgrades {
+  order: 2; /* Shows second on mobile */
+}
+
+.upgrades-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Mobile fist */
+  gap: 0.5rem;
+}
+
+.upgrade-item {
+  text-align: center;
+}
+
+.upgrade-img-container {
+  background-color: #00c3ff;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.upgrade-img-container img {
+  max-width: 100%;
+  max-height: 100px;
+  object-fit: contain;
+}
+
+.upgrade-item a {
+  color: blue;
+  text-decoration: none;
+}
+
+.upgrade-item a:hover {
+  text-decoration: underline;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 1rem;
+  margin-top: 2rem;
+}
+
+.copyright {
+  font-size: 0.8rem;
+}
+
+/* Desktop Styles */
+@media screen and (min-width: 768px) {
+  #wrapper {
+    margin: 50px 100px;
+   box-sizing: border-box;
+   border-radius: 10px;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid blue;
+    border-bottom: 10px solid blue;
+    background: #ffffff;
+    border-image: repeating-linear-gradient(to bottom, #00c3ff 0, #00c3ff 20px, #00c3ff 20px, #00c3ff 40px) 1;
+    
+  }
+}
+@media (min-width: 768px) {
+  .upgrades-grid { grid-template-columns: repeat(2, 1fr); }
+  #delorean-showcase { flex-direction: row; } /* Desktop image beside text */
+    body {
+        background-image: url('/images/site/small_check.jpg');
+    }
+
+  .main-container {
+    max-width: 900px;
+    margin: 1rem auto;
+  }
+
+  .siteName a {
+    font-size: 2rem;
+  }
+
+  #main-nav ul {
+    padding: 0.8rem 1rem;
+  }
+
+  #main-nav li {
+    margin: 0 1rem 0 0;
+  }
+
+  .delorean-details h2 {
+    font-size: 1.5rem;
+  }
+
+  /* Content layout for desktop */
+  .content-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  #delorean-reviews {
+    order: 2; /* Shows on right on desktop */
+    display: flex;
+    flex-direction: column;
+  }
+
+  #delorean-upgrades {
+    order: 1; /* Shows on left on desktop */
+  }
+}
+
+/* Media Query for Larger Screens */
+@media (min-width: 1024px) {
+  .hero-container picture img {
+      width: 100%;
+      height: auto;
+  }
+}
