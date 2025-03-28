@@ -316,3 +316,90 @@ footer {
       height: auto;
   }
 }
+
+/* ===== Classification View Styles ===== */
+
+/* Container for the classification view (wrap your classification.ejs output in a container if needed) */
+.inventory-classification {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 1rem;
+  background-color: #ffffff;
+}
+
+/* Classification Heading */
+.inventory-classification h1 {
+  font-size: 2.2rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #00c3ff;  /* Accent color */
+  border-bottom: 2px solid #00c3ff;
+  padding-bottom: 0.5rem;
+}
+
+/* Inventory Grid: This targets the grid built by your buildClassificationGrid function */
+#inv-display {
+  list-style: none;
+  padding: 0;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Each inventory item in the grid */
+#inv-display li {
+  background-color: #f8f8f8;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover effect to lift the item */
+#inv-display li:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Link styling for the inventory items */
+#inv-display li a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Vehicle Thumbnail Image */
+#inv-display li img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Container for vehicle name and price */
+.namePrice {
+  padding: 0.75rem 1rem;
+  text-align: center;
+  background-color: #fff;
+}
+
+/* Vehicle Name */
+.namePrice h2 {
+  font-size: 1.3rem;
+  margin: 0.5rem 0;
+  color: #333;
+}
+
+/* Vehicle Price */
+.namePrice span {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #00c3ff;
+}
+
+/* Notice message when no vehicles are found */
+.notice {
+  font-size: 1.2rem;
+  color: #b00;
+  text-align: center;
+  margin-top: 2rem;
+}
