@@ -1,6 +1,10 @@
 const invModel = require("../models/inventory-model")
 const Util = {}
 
+// Add the handleErrors function
+Util.handleErrors = fn => (req, res, next) => {
+  Promise.resolve(fn(req, res, next)).catch(next);
+};
 
 /* ************************
  * Constructs the nav HTML unordered list
@@ -36,7 +40,7 @@ Util.buildClassificationGrid = async function(data){
         grid += '<li>'
         grid +=  '<a href="../../inv/detail/'+ vehicle.inv_id 
         + '" title="View ' + vehicle.inv_make + ' '+ vehicle.inv_model 
-        + 'details"><img src="' + vehicle.inv_thumbnail 
+        + 'details"><img src="' + vehicle.inv_image 
         +'" alt="Image of '+ vehicle.inv_make + ' ' + vehicle.inv_model 
         +' on CSE Motors" /></a>'
         grid += '<div class="namePrice">'
@@ -58,6 +62,53 @@ Util.buildClassificationGrid = async function(data){
     return grid
   }
 
+/* **************************************
+ * Build the vehicle detail view HTML
+ * ************************************ */
+Util.buildDetailView = async function(vehicle) {
+  let detail = "";
+
+  // Container for the entire detail view
+  detail += '<div class="vehicle-detail-container">';
+
+  // Main heading: "2019 Cadillac Escalade" (for example)
+  // This is the large title at the top
+  detail += `<h2 class="vehicle-title">${vehicle.inv_year} ${vehicle.inv_make} ${vehicle.inv_model}</h2>`;
+
+  // Row container for image (left) and details (right)
+  detail += '<div class="vehicle-detail-row">';
+
+  // Left Column: Vehicle full-size image
+  detail += '<div class="vehicle-image">';
+  detail += `<img src="${vehicle.inv_image}" alt="Image of ${vehicle.inv_make} ${vehicle.inv_model}" />`;
+  detail += "</div>";
+
+  // Right Column: Vehicle details
+  detail += '<div class="vehicle-info">';
+  // Subheading for details, e.g. "Cadillac Escalade Details"
+  detail += `<h3>${vehicle.inv_make} ${vehicle.inv_model} Details</h3>`;
+
+  // Price (formatted)
+  detail += `<p><strong>Price:</strong> $${new Intl.NumberFormat("en-US").format(vehicle.inv_price)}</p>`;
+
+  // Description
+  detail += `<p><strong>Description:</strong> ${vehicle.inv_description}</p>`;
+
+  // Color
+  detail += `<p><strong>Color:</strong> ${vehicle.inv_color}</p>`;
+
+  // Miles (formatted)
+  detail += `<p><strong>Miles:</strong> ${new Intl.NumberFormat("en-US").format(vehicle.inv_miles)}</p>`;
+
+  detail += "</div>"; // End .vehicle-info
+
+  detail += "</div>"; // End .vehicle-detail-row
+  detail += "</div>"; // End .vehicle-detail-container
+
+  return detail;
+};
+
+
+
   module.exports = Util
   module.exports = Util;
-  

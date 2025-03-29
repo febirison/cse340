@@ -27,7 +27,6 @@ body {
   max-width: 100%;
   margin: 0 auto;
   position: relative;
-  
 }
 
 /* Main content container with blue border */
@@ -40,22 +39,17 @@ body {
 
 /* Header Styles */
 #top-header {
- /* display: flex; 
-  justify-content: space-between;
-  align-items: center; */
-  padding: 1.5rem 0; /* Added top/bottom padding */
- /* overflow: hidden;
-  padding: 20px 30px;*/
+  padding: 1.5rem 0;
   background-color: var(--background);
 }
 
 .header-content {
   display: flex;
-  justify-content: space-between; /* Pushes items to edges */
-  align-items: center; /* Vertically center items */
-  max-width: 1200px; /* Limits width for larger screens */
-  margin: 0 auto; /* Center the header content */
-  padding: 0 1rem; /* Add horizontal spacing from edges */
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
 }
 
 .siteName a {
@@ -64,19 +58,18 @@ body {
   color: #000;
   text-decoration: none;
 }
-#tools{
-  margin-left: auto; /* Pushes tools to  far right */
+
+#tools {
+  margin-left: auto;
 }
 
 #tools a {
   text-decoration: none;
   color: #000;
-  padding: 0.5rem 1rem; /* Add breathing room */
+  padding: 0.5rem 1rem;
   border: 1px solid #000;
   border-radius: 5px;
-  transition: background-color 0.3s; /* Smooth hover effect */
-/*  margin: 0 10px;
-  margin-right: 100px;*/
+  transition: background-color 0.3s;
 }
 
 #tools a:hover {
@@ -84,39 +77,32 @@ body {
 }
 
 /* Navigation Styles */
-#main-nav {
+nav {
   background-color: #24253c;
-  
 }
-.nav-container {
-  max-width: 1200px; /* Match the header width */
-  margin: 0 auto; /* Center the container */
-  padding: 1rem; /* Add space from edges */
+nav.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
 }
 
-#main-nav ul {
+nav ul {
   display: flex;
   list-style: none;
-  justify-content: center; /* Center the nav items */
-  gap: 0.5rem; /* Space between links */
-  max-width: 1200px; /* Limit width for larger screens */
-  padding: 0.5rem 1rem; /* Add padding */
-  
-
+  justify-content: center;
+  gap: 0.5rem;
+  max-width: 1200px;
+  padding: 0.5rem 1rem;
 }
 
-#main-nav li {
- /* margin: 0 0.5rem;*/
-}
-
-#main-nav a {
+nav a {
   color: white;
   text-decoration: none;
   padding: 0.5rem;
-  transition: opacity 0.3s; /* Smooth hover effect */
+  transition: opacity 0.3s;
 }
 
-#main-nav a:hover {
+nav a:hover {
   text-decoration: underline;
 }
 
@@ -132,7 +118,7 @@ h1 {
 /* Delorean Showcase */
 #delorean-showcase {
   display: flex;
-  flex-direction: column; /* Mobile image below text */
+  flex-direction: column;
   position: relative;
   margin-bottom: 2rem;
   background-color: white;
@@ -186,7 +172,7 @@ h1 {
 
 /* Reviews Section */
 #delorean-reviews {
-  order: 1; /* Shows first on mobile */
+  order: 1;
 }
 
 #delorean-reviews ul {
@@ -200,12 +186,12 @@ h1 {
 
 /* Upgrades Section */
 #delorean-upgrades {
-  order: 2; /* Shows second on mobile */
+  order: 2;
 }
 
 .upgrades-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* Mobile fist */
+  grid-template-columns: repeat(2, 1fr);
   gap: 0.5rem;
 }
 
@@ -252,74 +238,62 @@ footer {
 @media screen and (min-width: 768px) {
   #wrapper {
     margin: 50px 100px;
-   box-sizing: border-box;
-   border-radius: 10px;
+    box-sizing: border-box;
+    border-radius: 10px;
     border-left: 10px solid transparent;
     border-right: 10px solid transparent;
     border-top: 10px solid blue;
     border-bottom: 10px solid blue;
     background: #ffffff;
     border-image: repeating-linear-gradient(to bottom, #00c3ff 0, #00c3ff 20px, #00c3ff 20px, #00c3ff 40px) 1;
-    
   }
 }
 @media (min-width: 768px) {
   .upgrades-grid { grid-template-columns: repeat(2, 1fr); }
-  #delorean-showcase { flex-direction: row; } /* Desktop image beside text */
-    body {
-        background-image: url('/images/site/small_check.jpg');
-    }
-
+  #delorean-showcase { flex-direction: row; }
+  body {
+    background-image: url('/images/site/small_check.jpg');
+  }
   .main-container {
     max-width: 900px;
     margin: 1rem auto;
   }
-
   .siteName a {
     font-size: 2rem;
   }
-
-  #main-nav ul {
+  nav ul {
     padding: 0.8rem 1rem;
   }
-
-  #main-nav li {
+  nav li {
     margin: 0 1rem 0 0;
   }
-
   .delorean-details h2 {
     font-size: 1.5rem;
   }
-
-  /* Content layout for desktop */
   .content-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 2rem;
   }
-
   #delorean-reviews {
-    order: 2; /* Shows on right on desktop */
+    order: 2;
     display: flex;
     flex-direction: column;
   }
-
   #delorean-upgrades {
-    order: 1; /* Shows on left on desktop */
+    order: 1;
   }
 }
 
 /* Media Query for Larger Screens */
 @media (min-width: 1024px) {
   .hero-container picture img {
-      width: 100%;
-      height: auto;
+    width: 100%;
+    height: auto;
   }
 }
 
 /* ===== Classification View Styles ===== */
-
-/* Container for the classification view (wrap your classification.ejs output in a container if needed) */
 .inventory-classification {
   max-width: 1200px;
   margin: 2rem auto;
@@ -327,17 +301,15 @@ footer {
   background-color: #ffffff;
 }
 
-/* Classification Heading */
 .inventory-classification h1 {
   font-size: 2.2rem;
   text-align: center;
   margin-bottom: 1.5rem;
-  color: #00c3ff;  /* Accent color */
+  color: #00c3ff;
   border-bottom: 2px solid #00c3ff;
   padding-bottom: 0.5rem;
 }
 
-/* Inventory Grid: This targets the grid built by your buildClassificationGrid function */
 #inv-display {
   list-style: none;
   padding: 0;
@@ -347,7 +319,6 @@ footer {
   gap: 1.5rem;
 }
 
-/* Each inventory item in the grid */
 #inv-display li {
   background-color: #f8f8f8;
   border: 1px solid #ddd;
@@ -356,50 +327,147 @@ footer {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Hover effect to lift the item */
 #inv-display li:hover {
   transform: translateY(-5px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-/* Link styling for the inventory items */
 #inv-display li a {
   text-decoration: none;
   color: inherit;
 }
 
-/* Vehicle Thumbnail Image */
 #inv-display li img {
   width: 100%;
   height: auto;
   display: block;
 }
 
-/* Container for vehicle name and price */
 .namePrice {
   padding: 0.75rem 1rem;
   text-align: center;
   background-color: #fff;
 }
 
-/* Vehicle Name */
 .namePrice h2 {
   font-size: 1.3rem;
   margin: 0.5rem 0;
   color: #333;
 }
 
-/* Vehicle Price */
 .namePrice span {
   font-size: 1.1rem;
   font-weight: bold;
-  color: #00c3ff;
+  color: #000;
 }
 
-/* Notice message when no vehicles are found */
 .notice {
   font-size: 1.2rem;
   color: #b00;
   text-align: center;
   margin-top: 2rem;
+}
+
+/* ===== Vehicle Detail View Professional Styles ===== */
+
+/* Container for the entire detail view */
+.vehicle-detail-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* Car title at the top */
+.vehicle-title {
+  font-size: 2.8rem;
+  color: #000;
+  text-align: center;
+  margin-bottom: 2rem;
+  border-bottom: 3px solid #000;
+  padding-bottom: 0.5rem;
+}
+
+/* Row container for image and details */
+.vehicle-detail-row {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* For larger screens: display image and details side-by-side */
+@media screen and (min-width: 768px) {
+  .vehicle-detail-row {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+  .vehicle-image, .vehicle-info {
+    flex: 1;
+  }
+  .vehicle-image {
+    margin-right: 2rem;
+  }
+}
+
+/* Vehicle image styling */
+.vehicle-image {
+  text-align: center;
+}
+.vehicle-image img {
+  width: 100%;
+  height: auto;
+  max-height: 500px;
+  border-radius: 8px;
+  object-fit: cover;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Vehicle info styling */
+.vehicle-info {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: #333;
+}
+.vehicle-info p {
+  margin: 0.8rem 0;
+}
+.vehicle-info p strong {
+  color: #000;
+  font-weight: bold;
+}
+
+/* ===== Error Page Styles ===== */
+.error-container {
+  max-width: 800px;
+  margin: 3rem auto;
+  padding: 2rem;
+  text-align: center;
+  background-color: #f8f8f8;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+}
+
+/* 404 Error */
+.error-404 h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: #d9534f;
+}
+.error-404 p {
+  font-size: 1.5rem;
+  color: #555;
+}
+
+/* 505 Error */
+.error-505 h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: #d9534f;
+}
+.error-505 p {
+  font-size: 1.5rem;
+  color: #555;
 }

@@ -1,0 +1,13 @@
+<!-- Content Heading Section -->
+    <% if (title) { %>
+      <h1><%= title %></h1>
+    <% } else { %>
+      <% res.redirect('/'); %>
+    <% } %>
+
+    <%# messages() %>
+
+    <!-- Vehicle Detail Section -->
+    <section class="vehicle-detail-container">
+      <%- detail %>
+    </section>

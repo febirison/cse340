@@ -46,4 +46,34 @@ app.listen(port, () => {
 app.get("/", baseController.buildHome)
 
 // Inventory routes
-app.use("/inv", inventoryRoute)
+app.use("/inv", inventoryRoute);
+
+// Intentional error route
+app.get("/error", (req, res, next) => {
+  // Create and pass an error to trigger the error middleware
+  next(new Error("Intentional error triggered for testing purposes."));
+});
+
+// 404 catch-all comes AFTER all routes
+app.use((req, res) => {
+  res.status(404).render("error", { 
+      title: "404", 
+      message: "Sorry, we appear to have lost that page." 
+  });
+});
+
+
+const intentionalErrorRoute = require("./routes/intentionalErrorRoute");
+app.use("/intentional-error", intentionalErrorRoute);
+
+// Error handling middleware for 500 errors
+app.use(async (err, req, res, next) => {
+  console.error(err.stack);
+  const utilities = require("./utilities");
+  const nav = await utilities.getNav(); // Include nav if desired
+  res.status(500).render("error", { 
+      title: "Server Error", 
+      message: "Oh no! There was a crash. Maybe try a different route?", 
+      nav 
+  });
+});
