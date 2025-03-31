@@ -493,9 +493,8 @@ ul.messages li {
 }
 
 
-/* ===== Login Form Enhancements ===== */
-
-.login-container {
+/* ===== Unified Form Styles ===== */
+.login-container, .registration-container {
   max-width: 400px;
   margin: 2rem auto;
   padding: 1.5rem;
@@ -503,17 +502,16 @@ ul.messages li {
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   color: #fff;
-  text-align: center;
 }
 
-.login-form {
+.login-form, .registration-form {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.5rem;
 }
 
 /* Form labels */
-.login-form label {
+.login-form label, .registration-form label {
   display: block;
   text-align: left;
   margin-bottom: 0.3rem;
@@ -521,9 +519,8 @@ ul.messages li {
 }
 
 /* Form inputs */
-.login-form input[type="email"],
-.login-form input[type="password"] {
-  width: 100%;
+.login-form input, .registration-form input {
+ /* width: 100%;*/
   padding: 0.75rem;
   border: none;
   border-radius: 4px;
@@ -531,16 +528,14 @@ ul.messages li {
   transition: box-shadow 0.3s ease;
 }
 
-.login-form input[type="email"]:focus,
-.login-form input[type="password"]:focus {
+.login-form input:focus, .registration-form input:focus {
   box-shadow: 0 0 5px rgba(0, 123, 204, 0.8);
 }
 
-/* Show Password Container */
+/* Password toggle styling */
 .show-password-container {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
   gap: 0.5rem;
   font-size: 0.9rem;
   margin: 0.5rem 0;
@@ -551,8 +546,8 @@ ul.messages li {
   cursor: pointer;
 }
 
-/* Submit button */
-.login-form button {
+/* Submit buttons */
+.login-form button, .registration-form button[type="submit"] {
   padding: 0.75rem;
   background-color: #fff;
   color: #2f3e4d;
@@ -564,19 +559,32 @@ ul.messages li {
   transition: background-color 0.3s ease;
 }
 
-.login-form button:hover {
+.login-form button:hover, .registration-form button[type="submit"]:hover {
   background-color: #f0f0f0;
 }
 
-/* Register link styling */
-.register-link {
+/* Link styling */
+.register-link, .login-link {
   margin-top: 1rem;
   font-size: 1rem;
+  text-align: center;
 }
-.register-link a {
+
+.register-link a, .login-link a {
   color: #fff;
   text-decoration: underline;
 }
-.register-link a:hover {
+
+.register-link a:hover, .login-link a:hover {
   color: #ccc;
+}
+
+/* Error messages */
+.flash-error {
+  background: #ffdddd;
+  color: #d8000c;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 1rem;
+  text-align: center;
 }
