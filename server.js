@@ -14,6 +14,8 @@ const baseController = require("./controllers/baseController")
 const inventoryRoute = require("./routes/inventoryRoute.js")
 const session = require("express-session")
 const pool = require('./database/')
+const accountRoute = require("./routes/accountRoute")
+
 
 
 /* ***********************
@@ -51,6 +53,8 @@ app.set("layout", "./layouts/layout") // not at views root
  * Routes
  *************************/
 app.use(static)
+app.use("/account", accountRoute)
+
 
 /* ***********************
  * Local Server Information

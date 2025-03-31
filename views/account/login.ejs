@@ -1,0 +1,41 @@
+
+    <h1><%= title %></h1>
+    
+    <%- messages() %>
+
+    <div class="login-container">
+      <form action="/account/login" method="POST" class="login-form">
+        <label for="account_email">Email:</label>
+        <input 
+          type="email" 
+          id="account_email" 
+          name="account_email" 
+          placeholder="Enter your email" 
+          required
+        >
+
+        <label for="account_password">Password:</label>
+        <input 
+          type="password" 
+          id="account_password" 
+          name="account_password" 
+          placeholder="Enter your password" 
+          required
+        >
+
+        <!-- Show Password Checkbox -->
+        <div class="show-password-container">
+          <input type="checkbox" id="show-password">
+          <label for="show-password">Show Password</label>
+        </div>
+
+        <button type="submit">LOGIN</button>
+      </form>
+      <p class="register-link">
+        No account? <a href="/account/register">Sign-up</a>
+      </p>
+    </div>
+
+  <!-- Include the separate JS file -->
+  <script src="/js/showPassword.js"></script>
+
