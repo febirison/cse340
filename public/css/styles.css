@@ -364,7 +364,7 @@ footer {
 .notice {
   font-size: 1.2rem;
   color: #b00;
-  text-align: center;
+  /*text-align: center;*/
   margin-top: 2rem;
 }
 
@@ -470,4 +470,24 @@ footer {
 .error-505 p {
   font-size: 1.5rem;
   color: #555;
+}
+
+/* ===== Flash Messages Styling ===== */
+
+/* Style for the unordered list returned by messages() */
+ul.messages {
+  list-style: none;
+  padding: 0.8rem 1rem;
+  margin: 1rem auto;
+  max-width: 900px;
+  border: 1px solid #00c3ff; /* Accent border */
+  background-color: #e7f3ff; /* Light blue background */
+  color: #0077cc; /* Dark blue text */
+  border-radius: 5px;
+  font-size: 1.2rem;
+}
+
+/* Style for each individual message item */
+ul.messages li {
+  margin: 0.5rem 0;
 }
