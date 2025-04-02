@@ -15,12 +15,17 @@
         >
 
         <label for="account_password">Password:</label>
+        <div class="password-reminder">
+            <small>Password requirements: 12+ characters with uppercase, lowercase, number, and special character</small>
+          </div>
         <input 
           type="password" 
           id="account_password" 
           name="account_password" 
           placeholder="Enter your password" 
           required
+          pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"
+          title="Must match your registered password requirements"
         >
 
         <!-- Show Password Checkbox -->
