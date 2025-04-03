@@ -1,6 +1,13 @@
 <h1><%= title %></h1>
 
 <%- messages() %>
+<% if (errors) { %>
+    <ul class="notice">
+   <% errors.array().forEach(error => { %>
+     <li><%= error.msg %></li>
+  <%  }) %>
+   </ul>
+  <% } %>
 
 <div class="registration-container">
   <form action="/account/register" method="post" class="registration-form">
@@ -47,7 +54,7 @@
             <span>Passwords must be at least 12 characters and contain at least 1 number, 1 capital letter and 1 special character</span>
         </small>
       </div>
-      
+
     <div class="show-password-container">
       <input type="checkbox" id="show-password">
       <label for="show-password">Show Password</label>
