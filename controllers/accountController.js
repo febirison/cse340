@@ -1,6 +1,7 @@
 const utilities = require("../utilities")
 const accountModel = require("../models/account-model")
 const bcrypt = require("bcryptjs")
+require("dotenv").config()
 
 /* ****************************************
 *  Deliver login view
@@ -29,7 +30,7 @@ async function buildRegister(req, res, next) {
 /* ****************************************
 *  Process Registration
 * *************************************** */
-async function registerAccount(req, res) {
+async function registerAccount(req, res, next) {
     let nav = await utilities.getNav()
     const { account_firstname, account_lastname, account_email, account_password } = req.body
   
@@ -74,4 +75,41 @@ async function registerAccount(req, res) {
     }
   }
 
-  module.exports = { buildLogin, buildRegister, registerAccount }
+  /* ****************************************
+*  Process Login
+* *************************************** */
+async function accountLogin(req, res, next) {
+  let nav = await utilities.getNav()
+  const { account_email, account_password } = req.body
+  const accountData = await accountModel.getAccountByEmail(account_email)
+  if (!accountData) {
+   req.flash("notice", "Please check your credentials and try again.")
+   res.status(400).render("account/login", {
+    title: "Login",
+    nav,
+    errors: null,
+    account_email,
+   })
+  return
+  }
+  try {
+   if (await bcrypt.compare(account_password, accountData.account_password)) {
+    delete accountData.account_password
+    const accessToken = jwt.sign(accountData, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 3600 * 1000 })
+    res.cookie("jwt", accessToken, { httpOnly: true, maxAge: 3600 * 1000 })
+    return res.redirect("/account/")
+   } else {
+    req.flash("notice", "Please check your credentials and try again.")
+    res.status(400).render("account/login", {
+     title: "Login",
+     nav,
+     errors: null,
+     account_email,
+    })
+   }
+  } catch (error) {
+   return new Error('Access Forbidden')
+  }
+ }
+
+  module.exports = { buildLogin, buildRegister, registerAccount, accountLogin }

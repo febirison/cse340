@@ -10,29 +10,34 @@ Util.handleErrors = fn => (req, res, next) => {
  * Constructs the nav HTML unordered list
  ************************** */
 Util.getNav = async function (req, res, next) {
-  let data = await invModel.getClassifications()
-  let list = "<ul>"
-  list += '<li><a href="/" title="Home page">Home</a></li>'
-  data.rows.forEach((row) => {
-    list += "<li>"
-    list +=
-      '<a href="/inv/type/' +
-      row.classification_id +
-      '" title="See our inventory of ' +
-      row.classification_name +
-      ' vehicles">' +
-      row.classification_name +
-      "</a>"
-    list += "</li>"
-  })
-  list += "</ul>"
-  return list
+  try {
+    let data = await invModel.getClassifications()
+    let list = "<ul>"
+    list += '<li><a href="/" title="Home page">Home</a></li>'
+    data.rows.forEach((row) => {
+      list += "<li>"
+      list +=
+        '<a href="/inv/type/' +
+        row.classification_id +
+        '" title="See our inventory of ' +
+        row.classification_name +
+        ' vehicles">' +
+        row.classification_name +
+        "</a>"
+      list += "</li>"
+    })
+    list += "</ul>"
+    return list
+  } catch (error) {
+    console.error("Error in getNav:", error);
+    return "<ul><li>Error loading navigation</li></ul>";
+  }
 }
 
 /* **************************************
 * Build the classification view HTML
 * ************************************ */
-Util.buildClassificationGrid = async function(data){
+Util.buildClassificationGrid = async function(data, req, res, next){
     let grid
     if(data.length > 0){
       grid = '<ul id="inv-display">'
@@ -65,7 +70,7 @@ Util.buildClassificationGrid = async function(data){
 /* **************************************
  * Build the vehicle detail view HTML
  * ************************************ */
-Util.buildDetailView = async function(vehicle) {
+Util.buildDetailView = async function(vehicle, req, res, next) {
   let detail = "";
 
   // Container for the entire detail view
@@ -109,6 +114,29 @@ Util.buildDetailView = async function(vehicle) {
 };
 
 
+/* ***************************
+ *  Build Classification List
+ * *************************** */
+Util.buildClassificationList = async function (classification_id = null, req, res, next) {
+ 
+ try {
+  let data = await invModel.getClassifications()
+  if (!data.rows) throw new Error("No classifications found");
+  let classificationList = '<select name="classification_id" id="classificationList" required>'
+  classificationList += "<option value=''>Choose a Classification</option>"
+  data.rows.forEach((row) => {
+    classificationList += '<option value="' + row.classification_id + '"'
+    if (classification_id != null && row.classification_id == classification_id) {
+      classificationList += " selected "
+    }
+    classificationList += ">" + row.classification_name + "</option>"
+  })
+  classificationList += "</select>"
+  return classificationList;
+  } catch (error) {
+  console.error("Error building classification list:", error);
+  return '<select><option>Error loading classifications</option></select>';
+  }
+};
 
-  module.exports = Util
-  module.exports = Util;
+module.exports = Util;
