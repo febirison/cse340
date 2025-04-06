@@ -605,3 +605,171 @@ input:valid {
   color: #666;
   font-size: 0.9rem;
 }
+
+/* ===== Inventory Management and Form Styles ===== */
+.management-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.management-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+.management-links .btn {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background-color: #00c3ff;
+  color: #000000;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.management-links .btn:hover {
+  background-color: #0099cc;
+}
+
+/* Form Container (Add Classification and Add Inventory) */
+.form-container {
+  max-width: 400px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background-color: #00c3ff; /* Blue background */
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Instructional Text Above Form */
+.form-instructions {
+  text-align: center;
+  color: #000000; /* Red */
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+/* Form Styling */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.form-group label {
+  font-weight: bold;
+  color: #000;
+  margin-bottom: 0.2rem;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #000;
+  border-radius: 4px;
+  background-color: #fff;
+  font-size: 1rem;
+  color: #000;
+}
+
+.form-group textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.form-group select {
+  appearance: none;
+  background-image: url('data:image/svg+xml;utf8,<svg fill="black" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 0.5rem center;
+  background-size: 1rem;
+  padding-right: 1.5rem;
+}
+
+.form-group small {
+  font-size: 0.9rem;
+  color: #000;
+  margin-top: 0.2rem;
+}
+
+/* Button Styling */
+form button {
+  padding: 0.75rem 1.5rem;
+  background-color: #00c3ff; /* Matches form background */
+  color: #000;
+  border: 1px solid #000;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  align-self: center;
+  transition: background-color 0.3s ease;
+}
+
+form button:hover {
+  background-color: #0099cc;
+}
+
+/* Error Messages */
+.errors {
+  text-align: center;
+  color: #ff0000; /* Red */
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+.errors ul {
+  list-style: none;
+  padding: 0;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 600px) {
+  .form-container {
+    margin: 1rem;
+    padding: 1rem;
+  }
+  .management-container {
+    margin: 1rem;
+    padding: 1rem;
+  }
+  .management-links {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+/* Validation Styles (Reusing Existing) */
+.form-group input:invalid,
+.form-group textarea:invalid,
+.form-group select:invalid {
+  border-color: #ff4444;
+  box-shadow: 0 0 5px rgba(255, 68, 68, 0.3);
+}
+
+.form-group input:valid,
+.form-group textarea:valid,
+.form-group select:valid {
+  border-color: #00C851;
+  box-shadow: 0 0 5px rgba(0, 200, 81, 0.3);
+}

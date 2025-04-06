@@ -1,34 +1,35 @@
+<h1><%= title %></h1>
 
-    <h1><%= title %></h1>
-    
-    <%- messages() %>
-     
-    <% if (errors) { %>
-        <div class="errors">
-          <ul>
-          <% errors.array().forEach(error => { %>
-            <li><%= error.msg %></li>
-          <% }) %>
-          </ul>
-        </div>
-      <% } %>
-      
-    <form action="/inv/add-classification" method="post">
-      <div class="form-group">
-        <label for="classification_name">Classification Name:</label>
-        <input 
-          type="text" 
-          id="classification_name" 
-          name="classification_name" 
-          class="<%= errors && errors.length ? 'invalid' : '' %>"
-          value="<%= classification_name %>"
-          pattern="^[a-zA-Z0-9]+$"
-          title="No spaces or special characters"
-          required
-        >
-        <small>Must contain only letters and numbers</small>
-      </div>
+<%- messages() %>
 
-      <button type="submit">Add Classification</button>
-    </form>
+<% if (errors) { %>
+  <div class="errors">
+    <ul>
+    <% errors.array().forEach(error => { %>
+      <li><%= error.msg %></li>
+    <% }) %>
+    </ul>
+  </div>
+<% } %>
+
+<div class="form-container">
+  <div class="form-instructions">All fields are required.</div>
+  <form action="/inv/add-classification" method="post">
+    <div class="form-group">
+      <label for="classification_name">Classification Name:</label>
+      <input 
+        type="text" 
+        id="classification_name" 
+        name="classification_name" 
+        class="<%= errors && errors.length ? 'invalid' : '' %>"
+        value="<%= classification_name %>"
+        pattern="^[a-zA-Z0-9]+$" 
+        title="No spaces or special characters"
+        required
+      >
+      <small>Name must be alphabetic characters only.</small>
+    </div>
+    <button type="submit">Add Classification</button>
+  </form>
+</div>
   

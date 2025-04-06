@@ -12,6 +12,7 @@ async function getClassifications(req, res, next) {
   }
 }
 
+
 /* ***************************
  *  Get all inventory items and classification_name by classification_id
  * ************************** */

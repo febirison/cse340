@@ -7,46 +7,31 @@ const utilities = require("./index")
  * *************************** */
 validate.inventoryRules = () => {
   return [
-    body("inv_make")
-      .trim()
-      .notEmpty()
-      .withMessage("Make is required"),
-    
-    body("inv_model")
-      .trim()
-      .notEmpty()
-      .withMessage("Model is required"),
-    
-    body("inv_year")
-      .trim()
-      .isNumeric()
-      .withMessage("Valid 4-digit year required"),
-    
-    body("inv_description")
-      .trim()
-      .notEmpty()
-      .withMessage("Description required"),
-    
-    body("inv_price")
-      .trim()
-      .isNumeric()
-      .withMessage("Valid price required"),
-    
-    body("inv_miles")
-      .trim()
-      .isNumeric()
-      .withMessage("Valid mileage required"),
-    
-    body("inv_color")
-      .trim()
-      .notEmpty()
-      .withMessage("Color required"),
-    
-    body("classification_id")
-      .notEmpty()
+    body("inv_make").trim().notEmpty().matches(/^[A-Za-z0-9 ]+$/)
+      .withMessage("Make must contain letters, numbers, and spaces only").isLength({ min: 3 })
+      .withMessage("Make must be at least 3 characters"),
+    body("inv_model").trim().notEmpty().matches(/^[A-Za-z0-9 ]+$/)
+      .withMessage("Model must contain letters, numbers, and spaces only").isLength({ min: 3 })
+      .withMessage("Model must be at least 3 characters"),
+    body("inv_year").trim().isInt({ min: 1900, max: new Date().getFullYear() + 1 })
+      .withMessage("Year must be a 4-digit number between 1900 and next year"),
+    body("inv_description").trim().notEmpty()
+      .withMessage("Description is required"),
+    body("inv_image").trim().matches(/^\/images\/vehicles\/.*\.(jpg|png)$/)
+      .withMessage("Image path must be valid (e.g., /images/vehicles/car.jpg)"),
+    body("inv_thumbnail").trim().matches(/^\/images\/vehicles\/.*\.(jpg|png)$/)
+      .withMessage("Thumbnail path must be valid (e.g., /images/vehicles/car-tn.jpg)"),
+    body("inv_price").trim().isFloat({ min: 0 })
+      .withMessage("Price must be a positive number (e.g., 25000.99)"),
+    body("inv_miles").trim().isInt({ min: 0 })
+      .withMessage("Miles must be a whole number"),
+    body("inv_color").trim().notEmpty().matches(/^[A-Za-z ]+$/)
+      .withMessage("Color must contain letters and spaces only"),
+    body("classification_id").notEmpty()
       .withMessage("Classification required")
   ]
-}
+};
+
 
 /* ***************************
  *  Check Validation Results

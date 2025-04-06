@@ -60,29 +60,28 @@ invCont.buildManagement = async function(req, res, next) {
 
 // Add to invCont object to export the function
 invCont.buildAddClassification = async function(req, res, next) {
-  let nav = await utilities.getNav()
+  let nav = await utilities.getNav();
   res.render("inventory/add-classification", {
     title: "Add Classification",
     nav,
     errors: null,
     classification_name: ""
-  })
-}
+  });
+};
 
-invCont.addClassification = async function(req, res, next) {
-  const { classification_name } = req.body
-  const result = await classificationModel.insertClassification(classification_name)
-
+invCont.addInventory = async function(req, res, next) {
+  const invData = req.body
+  const result = await invModel.insertInventoryItem(invData)
   if (result.rowCount === 1) {
-    req.flash("notice", `${classification_name} added successfully!`)
+    req.flash("notice", `${invData.inv_make} ${invData.inv_model} added successfully!`)
     res.redirect("/inv/")
   } else {
-    req.flash("notice", "Failed to add classification")
-    res.status(500).render("inventory/add-classification", {
-      title: "Add Classification",
+    res.status(500).render("inventory/add-inventory", {
+      title: "Add Inventory",
       nav: await utilities.getNav(),
-      errors: null,
-      classification_name
+      classificationList: await utilities.buildClassificationList(invData.classification_id),
+      errors: [{ msg: "Failed to add inventory item to database" }],
+      ...invData
     })
   }
 }
@@ -101,11 +100,12 @@ invCont.buildAddInventory = async function(req, res, next) {
       classificationList,
       errors: null
     });
+    console.log("[DEBUG] Rendered add-inventory view");
   } catch (error) {
-    console.error("[CRITICAL] Error in buildAddInventory:", error);
+    console.error("[CRITICAL] Error in buildAddInventory:", error.stack);
     res.status(500).render("error", {
       title: "Server Error",
-      message: "Failed to load inventory form"
+      message: "Failed to load inventory form: " + error.message
     });
   }
 };
@@ -130,5 +130,21 @@ invCont.addInventory = async function(req, res, next) {
     })
   }
 }
+
+invCont.addClassification = async function(req, res, next) {
+  const { classification_name } = req.body;
+  const result = await classificationModel.insertClassification(classification_name);
+  if (result.rowCount === 1) {
+    req.flash("notice", `${classification_name} added successfully!`);
+    res.redirect("/inv/");
+  } else {
+    res.status(500).render("inventory/add-classification", {
+      title: "Add Classification",
+      nav: await utilities.getNav(),
+      errors: [{ msg: "Failed to add classification to database" }],
+      classification_name
+    });
+  }
+};
 
 module.exports = invCont;
