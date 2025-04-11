@@ -72,11 +72,11 @@ invCont.buildAddClassification = async function(req, res, next) {
 };
 
 invCont.addInventory = async function(req, res, next) {
-  const invData = req.body
-  const result = await invModel.insertInventoryItem(invData)
+  const invData = req.body;
+  const result = await invModel.insertInventoryItem(invData);
   if (result.rowCount === 1) {
-    req.flash("notice", `${invData.inv_make} ${invData.inv_model} added successfully!`)
-    res.redirect("/inv/")
+    req.flash("notice", `${invData.inv_make} ${invData.inv_model} added successfully!`);
+    res.redirect("/inv/");
   } else {
     res.status(500).render("inventory/add-inventory", {
       title: "Add Inventory",
@@ -84,9 +84,9 @@ invCont.addInventory = async function(req, res, next) {
       classificationList: await utilities.buildClassificationList(invData.classification_id),
       errors: [{ msg: "Failed to add inventory item to database" }],
       ...invData
-    })
+    });
   }
-}
+};
 
 invCont.buildAddInventory = async function(req, res, next) {
   try {
@@ -114,23 +114,23 @@ invCont.buildAddInventory = async function(req, res, next) {
 //* ***************************
 // *  Add Inventory Item  
 invCont.addInventory = async function(req, res, next) {
-  const invData = req.body
-  const result = await invModel.insertInventoryItem(invData)
+  const invData = req.body;
+  const result = await invModel.insertInventoryItem(invData);
 
   if (result.rowCount === 1) {
-    req.flash("notice", `${invData.inv_make} ${invData.inv_model} added successfully!`)
-    res.redirect("/inv/")
+    req.flash("notice", `${invData.inv_make} ${invData.inv_model} added successfully!`);
+    res.redirect("/inv/");
   } else {
-    req.flash("notice", "Failed to add inventory item")
+    req.flash("notice", "Failed to add inventory item");
     res.status(500).render("inventory/add-inventory", {
       title: "Add Inventory",
       nav: await utilities.getNav(),
       classificationList: await utilities.buildClassificationList(invData.classification_id),
       errors: null,
       ...invData
-    })
+    });
   }
-}
+};
 
 invCont.addClassification = async function(req, res, next) {
   const { classification_name } = req.body;
@@ -158,6 +158,48 @@ invCont.getInventoryJSON = async (req, res, next) => {
     return res.json(invData);
   } else {
     next(new Error("No data returned"));
+  }
+};
+
+/* ***************************
+ *  Build edit inventory view
+ * ************************** */
+invCont.buildEditInventoryView = async function (req, res, next) {
+  try {
+    const inv_id = parseInt(req.params.inv_id);
+    let nav = await utilities.getNav();
+    const itemData = await invModel.getInventoryById(inv_id);
+    
+    if (!itemData) {
+      return next(new Error("Inventory item not found"));
+    }
+    
+    const classificationSelect = await utilities.buildClassificationList(itemData.classification_id);
+    const itemName = `${itemData.inv_make} ${itemData.inv_model}`;
+    res.render("./inventory/edit-inventory", {
+      title: "Edit " + itemName,
+      nav,
+      classificationSelect,
+      errors: null,
+      inv_id: itemData.inv_id,
+      inv_make: itemData.inv_make,
+      inv_model: itemData.inv_model,
+      inv_year: itemData.inv_year,
+      inv_description: itemData.inv_description,
+      inv_image: itemData.inv_image,
+      inv_thumbnail: itemData.inv_thumbnail,
+      inv_price: itemData.inv_price,
+      inv_miles: itemData.inv_miles,
+      inv_color: itemData.inv_color,
+      classification_id: itemData.classification_id
+    });
+  } catch (error) {
+    console.error("[CRITICAL] Error in buildEditInventoryView:", error.stack);
+    res.status(500).render("error", {
+      title: "Server Error",
+      message: "Failed to load edit inventory form: " + error.message,
+      nav: await utilities.getNav()
+    });
   }
 };
 

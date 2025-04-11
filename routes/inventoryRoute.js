@@ -22,6 +22,9 @@ router.get("/type/:classificationId", utilities.handleErrors(invController.build
 // Route to get inventory by classification as JSON for AJAX
 router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON));
 
+// Route to build edit inventory view
+router.get("/edit/:inv_id", utilities.handleErrors(invController.buildEditInventoryView));
+
 // Route to build vehicle detail view
 //router.get("/detail/:inv_id", invController.buildDetailView);
 
