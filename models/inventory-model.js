@@ -114,12 +114,26 @@ async function updateInventory(
   }
 }
 
+/* ***************************
+ *  Delete Inventory Item
+ * ************************** */
+async function deleteInventoryItem(inv_id) {
+  try {
+    const sql = "DELETE FROM public.inventory WHERE inv_id = $1"
+    const data = await pool.query(sql, [inv_id])
+    return data
+  } catch (error) {
+    console.error("Delete Inventory Error: " + error)
+    throw new Error("Delete Inventory Error")
+  }
+}
+
 // Add to exports
 module.exports = {
   getClassifications,
   getInventoryByClassificationId,
   getInventoryById,
   insertInventoryItem,
-  updateInventory
+  updateInventory,
+  deleteInventoryItem
 } // Export the functions for use in routes/inventoryRoute.js
-// Compare this snippet from public/js/inventory.js:

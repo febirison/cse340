@@ -272,4 +272,75 @@ invCont.updateInventory = async function (req, res, next) {
   }
 };
 
+/* ***************************
+ *  Build delete confirmation view
+ * ************************** */
+invCont.buildDeleteConfirmView = async function (req, res, next) {
+  try {
+    const inv_id = parseInt(req.params.inv_id);
+    let nav = await utilities.getNav();
+    const itemData = await invModel.getInventoryById(inv_id);
+    
+    if (!itemData) {
+      return next(new Error("Inventory item not found"));
+    }
+    
+    const itemName = `${itemData.inv_make} ${itemData.inv_model}`;
+    res.render("./inventory/delete-confirm", {
+      title: "Delete " + itemName,
+      nav,
+      errors: null,
+      inv_id: itemData.inv_id,
+      inv_make: itemData.inv_make,
+      inv_model: itemData.inv_model,
+      inv_year: itemData.inv_year,
+      inv_price: itemData.inv_price
+    });
+  } catch (error) {
+    console.error("[CRITICAL] Error in buildDeleteConfirmView:", error.stack);
+    res.status(500).render("error", {
+      title: "Server Error",
+      message: "Failed to load delete confirmation form: " + error.message,
+      nav: await utilities.getNav()
+    });
+  }
+};
+
+/* ***************************
+ *  Delete Inventory Data
+ * ************************** */
+invCont.deleteInventory = async function (req, res, next) {
+  try {
+    let nav = await utilities.getNav();
+    const { inv_id, inv_make, inv_model } = req.body;
+    const deleteResult = await invModel.deleteInventoryItem(parseInt(inv_id));
+
+    if (deleteResult.rowCount === 1) {
+      const itemName = `${inv_make} ${inv_model}`;
+      req.flash("notice", `The ${itemName} was successfully deleted.`);
+      res.redirect("/inv/");
+    } else {
+      const itemName = `${inv_make} ${inv_model}`;
+      req.flash("notice", "Sorry, the deletion failed.");
+      res.status(501).render("inventory/delete-confirm", {
+        title: "Delete " + itemName,
+        nav,
+        errors: null,
+        inv_id,
+        inv_make,
+        inv_model,
+        inv_year: req.body.inv_year,
+        inv_price: req.body.inv_price
+      });
+    }
+  } catch (error) {
+    console.error("[CRITICAL] Error in deleteInventory:", error.stack);
+    res.status(500).render("error", {
+      title: "Server Error",
+      message: "Failed to delete inventory item: " + error.message,
+      nav: await utilities.getNav()
+    });
+  }
+};
+
 module.exports = invCont; // Export the controller functions for use in routes/inventoryRoute.js

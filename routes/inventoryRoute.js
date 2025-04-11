@@ -25,6 +25,12 @@ router.get("/getInventory/:classification_id", utilities.handleErrors(invControl
 // Route to build edit inventory view
 router.get("/edit/:inv_id", utilities.handleErrors(invController.buildEditInventoryView));
 
+// Route to build delete confirmation view
+router.get("/delete/:inv_id", utilities.handleErrors(invController.buildDeleteConfirmView));
+
+// Route to delete inventory item
+router.post("/delete", utilities.handleErrors(invController.deleteInventory));
+
 // Route to update inventory item
 router.post("/update/",
   inventoryValidate.inventoryRules(),
@@ -50,4 +56,3 @@ router.post("/add-inventory",
 );
 
 module.exports = router; // Export the router for use in server.js
-// Compare this snippet from routes/inventoryRoute.js:

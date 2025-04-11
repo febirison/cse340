@@ -1,0 +1,50 @@
+<h1><%= title %></h1>
+
+<%- messages() %>
+
+<% if (errors) { %>
+  <div class="errors">
+    <ul>
+    <% errors.array().forEach(error => { %>
+      <li><%= error.msg %></li>
+    <% }) %>
+    </ul>
+  </div>
+<% } %>
+
+<div class="form-container">
+  <div class="form-instructions">Confirm Deletion - The delete is permanent.</div>
+  <form action="/inv/delete" method="post">
+    <input type="hidden" name="inv_id" <% if(locals.inv_id) { %> value="<%= locals.inv_id %>" <% } %>>
+    <div class="form-group">
+      <label for="inv_make">Make:</label>
+      <input type="text" name="inv_make" id="inv_make" 
+             value="<%= typeof inv_make !== 'undefined' ? inv_make : '' %>" 
+             readonly>
+    </div>
+
+    <div class="form-group">
+      <label for="inv_model">Model:</label>
+      <input type="text" name="inv_model" id="inv_model" 
+             value="<%= typeof inv_model !== 'undefined' ? inv_model : '' %>" 
+             readonly>
+    </div>
+
+    <div class="form-group">
+      <label for="inv_year">Year:</label>
+      <input type="number" name="inv_year" id="inv_year" 
+             value="<%= typeof inv_year !== 'undefined' ? inv_year : '' %>" 
+             readonly>
+    </div>
+
+    <div class="form-group">
+      <label for="inv_price">Price:</label>
+      <input type="number" name="inv_price" id="inv_price" 
+             step="0.01" 
+             value="<%= typeof inv_price !== 'undefined' ? inv_price : '' %>" 
+             readonly>
+    </div>
+
+    <button type="submit">Delete</button>
+  </form>
+</div>
