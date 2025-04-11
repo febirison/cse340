@@ -773,3 +773,31 @@ form button:hover {
   border-color: #00C851;
   box-shadow: 0 0 5px rgba(0, 200, 81, 0.3);
 }
+
+/* Inventory Display Table */
+#inventoryDisplay {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+#inventoryDisplay th,
+#inventoryDisplay td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+#inventoryDisplay th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+#inventoryDisplay a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+#inventoryDisplay a:hover {
+  text-decoration: underline;
+}
