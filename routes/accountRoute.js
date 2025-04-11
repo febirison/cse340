@@ -13,7 +13,7 @@ router.get("/login", utilities.handleErrors(accountController.buildLogin));
 router.get("/register", utilities.handleErrors(accountController.buildRegister));
 
 // Route to deliver the account management view
-router.get("/", utilities.handleErrors(accountController.buildManagement));
+router.get("/", utilities.checkLogin, utilities.handleErrors(accountController.buildManagement))
 
 // Process the registration data
 router.post(
