@@ -12,7 +12,6 @@ async function getClassifications(req, res, next) {
   }
 }
 
-
 /* ***************************
  *  Get all inventory items and classification_name by classification_id
  * ************************** */
@@ -49,7 +48,6 @@ async function getInventoryById(inv_id, req, res, next) {
   }
 }
 
-
 /* ***************************
  *  Insert New Inventory Item
  * *************************** */
@@ -78,10 +76,50 @@ async function insertInventoryItem(invData, req, res, next) {
   }
 }
 
+/* ***************************
+ *  Update Inventory Data
+ * ************************** */
+async function updateInventory(
+  inv_id,
+  inv_make,
+  inv_model,
+  inv_description,
+  inv_image,
+  inv_thumbnail,
+  inv_price,
+  inv_year,
+  inv_miles,
+  inv_color,
+  classification_id
+) {
+  try {
+    const sql =
+      "UPDATE public.inventory SET inv_make = $1, inv_model = $2, inv_description = $3, inv_image = $4, inv_thumbnail = $5, inv_price = $6, inv_year = $7, inv_miles = $8, inv_color = $9, classification_id = $10 WHERE inv_id = $11 RETURNING *"
+    const data = await pool.query(sql, [
+      inv_make,
+      inv_model,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_year,
+      inv_miles,
+      inv_color,
+      classification_id,
+      inv_id
+    ])
+    return data.rows[0]
+  } catch (error) {
+    console.error("model error: " + error)
+  }
+}
+
 // Add to exports
 module.exports = {
   getClassifications,
   getInventoryByClassificationId,
   getInventoryById,
-  insertInventoryItem
-}
+  insertInventoryItem,
+  updateInventory
+} // Export the functions for use in routes/inventoryRoute.js
+// Compare this snippet from public/js/inventory.js:

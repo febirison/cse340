@@ -127,7 +127,7 @@ invCont.addInventory = async function(req, res, next) {
       nav: await utilities.getNav(),
       classificationList: await utilities.buildClassificationList(invData.classification_id),
       errors: null,
-      ...invData
+      ...req.body
     });
   }
 };
@@ -203,4 +203,73 @@ invCont.buildEditInventoryView = async function (req, res, next) {
   }
 };
 
-module.exports = invCont;
+/* ***************************
+ *  Update Inventory Data
+ * ************************** */
+invCont.updateInventory = async function (req, res, next) {
+  try {
+    let nav = await utilities.getNav();
+    const {
+      inv_id,
+      inv_make,
+      inv_model,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_year,
+      inv_miles,
+      inv_color,
+      classification_id,
+    } = req.body;
+    const updateResult = await invModel.updateInventory(
+      inv_id,  
+      inv_make,
+      inv_model,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_year,
+      inv_miles,
+      inv_color,
+      classification_id
+    );
+
+    if (updateResult) {
+      const itemName = updateResult.inv_make + " " + updateResult.inv_model;
+      req.flash("notice", `The ${itemName} was successfully updated.`);
+      res.redirect("/inv/");
+    } else {
+      const classificationSelect = await utilities.buildClassificationList(classification_id);
+      const itemName = `${inv_make} ${inv_model}`;
+      req.flash("notice", "Sorry, the update failed.");
+      res.status(501).render("inventory/edit-inventory", {
+        title: "Edit " + itemName,
+        nav,
+        classificationSelect,
+        errors: null,
+        inv_id,
+        inv_make,
+        inv_model,
+        inv_year,
+        inv_description,
+        inv_image,
+        inv_thumbnail,
+        inv_price,
+        inv_miles,
+        inv_color,
+        classification_id
+      });
+    }
+  } catch (error) {
+    console.error("[CRITICAL] Error in updateInventory:", error.stack);
+    res.status(500).render("error", {
+      title: "Server Error",
+      message: "Failed to update inventory item: " + error.message,
+      nav: await utilities.getNav()
+    });
+  }
+};
+
+module.exports = invCont; // Export the controller functions for use in routes/inventoryRoute.js

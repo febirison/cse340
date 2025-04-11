@@ -25,6 +25,13 @@ router.get("/getInventory/:classification_id", utilities.handleErrors(invControl
 // Route to build edit inventory view
 router.get("/edit/:inv_id", utilities.handleErrors(invController.buildEditInventoryView));
 
+// Route to update inventory item
+router.post("/update/",
+  inventoryValidate.inventoryRules(),
+  inventoryValidate.checkUpdateData,
+  utilities.handleErrors(invController.updateInventory)
+);
+
 // Route to build vehicle detail view
 //router.get("/detail/:inv_id", invController.buildDetailView);
 
@@ -42,4 +49,5 @@ router.post("/add-inventory",
   utilities.handleErrors(invController.addInventory)
 );
 
-module.exports = router;
+module.exports = router; // Export the router for use in server.js
+// Compare this snippet from routes/inventoryRoute.js:

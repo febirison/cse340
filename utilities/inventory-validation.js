@@ -32,7 +32,6 @@ validate.inventoryRules = () => {
   ]
 };
 
-
 /* ***************************
  *  Check Validation Results
  * *************************** */
@@ -50,4 +49,25 @@ validate.checkInventoryData = async (req, res, next) => {
   next()
 }
 
-module.exports = validate
+/* ***************************
+ *  Check Validation Results for Update
+ * *************************** */
+validate.checkUpdateData = async (req, res, next) => {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    const { inv_id, inv_make, inv_model, classification_id } = req.body
+    const itemName = `${inv_make} ${inv_model}`
+    return res.render("inventory/edit-inventory", {
+      title: "Edit " + itemName,
+      nav: await utilities.getNav(),
+      classificationSelect: await utilities.buildClassificationList(classification_id),
+      errors: errors.array(),
+      inv_id,
+      ...req.body
+    })
+  }
+  next()
+}
+
+module.exports = validate; // Export the validation functions for use in routes/inventoryRoute.js
+// Compare this snippet from controllers/invController.js:

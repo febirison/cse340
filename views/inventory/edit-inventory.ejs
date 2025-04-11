@@ -14,8 +14,8 @@
 
 <div class="form-container">
   <div class="form-instructions">All fields are required. You are editing an existing vehicle.</div>
-  <form action="/inv/update" method="post">
-    <input type="hidden" name="inv_id" value="<%= inv_id %>">
+  <form id="updateForm" action="/inv/update" method="post">
+    <input type="hidden" name="inv_id" <% if(locals.inv_id) { %> value="<%= locals.inv_id %>" <% } %>>
     <div class="form-group">
       <% if (classificationSelect && classificationSelect.includes('id="classificationList"')) { %>
         <label for="classificationList">Classification:</label>
@@ -96,6 +96,7 @@
              pattern="[A-Za-z ]+" title="Letters and spaces only" required>
     </div>
 
-    <button type="submit">Update Vehicle</button>
+    <button type="submit" disabled>Update Vehicle</button>
   </form>
+  <script src="/js/inv-update.js"></script>
 </div>
