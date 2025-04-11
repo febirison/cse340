@@ -5,6 +5,7 @@
 /* ***********************
  * Require Statements
  *************************/
+const utilities = require("./utilities");
 const express = require("express");
 const expressLayouts = require("express-ejs-layouts");
 const env = require("dotenv").config();
@@ -17,6 +18,8 @@ const pool = require('./database/');
 const accountRoute = require("./routes/accountRoute");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser"); // Add cookie-parser
+
+
 
 /* ***********************
  * Middleware
@@ -45,6 +48,9 @@ app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x
 
 // Add cookie-parser middleware
 app.use(cookieParser());
+
+// Set static folder
+app.use(utilities.checkJWTToken)
 
 /* ***********************
  * View Engine and Templates
@@ -101,7 +107,7 @@ app.use("/intentional-error", intentionalErrorRoute);
 // Error handling middleware for 500 errors
 app.use(async (err, req, res, next) => {
   console.error(err.stack);
-  const utilities = require("./utilities");
+  //const utilities = require("./utilities");
   const nav = await utilities.getNav(); // Include nav if desired
   res.status(500).render("error", { 
       title: "Server Error", 
