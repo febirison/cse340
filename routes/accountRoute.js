@@ -13,7 +13,13 @@ router.get("/login", utilities.handleErrors(accountController.buildLogin));
 router.get("/register", utilities.handleErrors(accountController.buildRegister));
 
 // Route to deliver the account management view
-router.get("/", utilities.checkLogin, utilities.handleErrors(accountController.buildManagement))
+router.get("/", utilities.checkLogin, utilities.handleErrors(accountController.buildManagement));
+
+// Route to deliver the account update view
+router.get("/update/:account_id", utilities.checkLogin, utilities.handleErrors(accountController.buildUpdateView));
+
+// Route to handle logout
+router.get("/logout", utilities.handleErrors(accountController.logout));
 
 // Process the registration data
 router.post(
@@ -31,4 +37,22 @@ router.post(
     utilities.handleErrors(accountController.accountLogin)
 );
 
-module.exports = router;
+// Process the account update
+router.post(
+    "/update",
+    utilities.checkLogin,
+    regValidate.accountUpdateRules(),
+    regValidate.checkAccountUpdateData,
+    utilities.handleErrors(accountController.updateAccount)
+);
+
+// Process the password update
+router.post(
+    "/update-password",
+    utilities.checkLogin,
+    regValidate.passwordUpdateRules(),
+    regValidate.checkPasswordUpdateData,
+    utilities.handleErrors(accountController.updatePassword)
+);
+
+module.exports = router; // Export the router for use in server.js

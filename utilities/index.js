@@ -115,7 +115,6 @@ Util.buildDetailView = async function(vehicle, req, res, next) {
   return detail;
 };
 
-
 /* ***************************
  *  Build Classification List
  * *************************** */
@@ -144,7 +143,6 @@ Util.buildClassificationList = async function (classification_id = null) {
   }
 };
 
-
 /* ****************************************
 * Middleware to check token validity
 **************************************** */
@@ -166,18 +164,35 @@ Util.checkJWTToken = (req, res, next) => {
   } else {
    next()
   }
- }
+}
 
- /* ****************************************
- *  Check Login
- * ************************************ */
- Util.checkLogin = (req, res, next) => {
+/* ****************************************
+*  Check Login
+* ************************************ */
+Util.checkLogin = (req, res, next) => {
   if (res.locals.loggedin) {
     next()
   } else {
     req.flash("notice", "Please log in.")
     return res.redirect("/account/login")
   }
- }
+}
 
-module.exports = Util;
+/* ****************************************
+* Middleware to check account type for admin access
+**************************************** */
+Util.checkAccountType = (req, res, next) => {
+  if (!res.locals.loggedin) {
+    req.flash("notice", "Please log in to access this page.");
+    return res.redirect("/account/login");
+  }
+  const accountType = res.locals.accountData.account_type;
+  if (accountType === "Employee" || accountType === "Admin") {
+    next();
+  } else {
+    req.flash("notice", "You do not have permission to access this page. Employee or Admin account required.");
+    return res.redirect("/account/login");
+  }
+}
+
+module.exports = Util; // Export the utility functions for use in routes/inventoryRoute.js
