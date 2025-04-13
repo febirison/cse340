@@ -919,3 +919,82 @@ form button:hover {
 .vehicle-info form button:hover {
   background-color: #0099cc;
 }
+
+/* Hamburger Menu Styles */
+.hamburger {
+  display: none; /* Hidden by default on desktop */
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: white;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+.nav-menu {
+  display: block; /* Visible by default on desktop */
+}
+
+/* Navigation Styles (ensure existing styles are compatible) */
+nav {
+  background-color: #24253c;
+}
+
+nav.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+  justify-content: center;
+  gap: 0.5rem;
+  max-width: 1200px;
+  padding: 0.5rem 1rem;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  padding: 0.5rem;
+  transition: opacity 0.3s;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+/* Mobile Styles (below 768px) */
+@media (max-width: 767px) {
+  .hamburger {
+    display: block; /* Show hamburger button on mobile */
+  }
+
+  .nav-menu {
+    display: none; /* Hide menu by default on mobile */
+  }
+
+  .nav-menu.active {
+    display: block; /* Show menu when active */
+  }
+
+  nav ul {
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Center items horizontally */
+    gap: 1rem; /* Increase gap for better spacing */
+    padding: 0.5rem;
+  }
+
+  nav li {
+    width: 100%; /* Make each item take full width */
+    text-align: center; /* Center the text */
+  }
+
+  nav a {
+    display: block; /* Ensure the link takes the full width of the li */
+    padding: 0.75rem; /* Increase padding for touch targets */
+    font-size: 1.1rem; /* Slightly larger font for readability */
+  }
+}
