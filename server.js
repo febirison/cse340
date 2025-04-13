@@ -115,3 +115,47 @@ app.use(async (err, req, res, next) => {
       nav 
   });
 });
+
+// Initialize database tables
+async function initializeDatabase() {
+  try {
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS classification (
+        classification_id SERIAL PRIMARY KEY,
+        classification_name VARCHAR(50) NOT NULL
+      );
+    `);
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS inventory (
+        inv_id SERIAL PRIMARY KEY,
+        inv_make VARCHAR(50) NOT NULL,
+        inv_model VARCHAR(50) NOT NULL,
+        inv_year INTEGER NOT NULL,
+        inv_description TEXT,
+        inv_image VARCHAR(255),
+        inv_thumbnail VARCHAR(255),
+        inv_price DECIMAL(10,2) NOT NULL,
+        inv_miles INTEGER NOT NULL,
+        inv_color VARCHAR(50),
+        classification_id INTEGER,
+        FOREIGN KEY (classification_id) REFERENCES classification(classification_id)
+      );
+    `);
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS favorites (
+        favorite_id SERIAL PRIMARY KEY,
+        account_id INTEGER NOT NULL,
+        inv_id INTEGER NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (account_id) REFERENCES account(account_id),
+        FOREIGN KEY (inv_id) REFERENCES inventory(inv_id),
+        UNIQUE (account_id, inv_id)
+      );
+    `);
+    console.log("Database tables initialized successfully");
+  } catch (error) {
+    console.error("Error initializing database tables:", error);
+  }
+}
+
+initializeDatabase();

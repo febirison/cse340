@@ -362,7 +362,6 @@ footer {
 .notice {
   font-size: 1.2rem;
   color: #b00;
-  /*text-align: center;*/
   margin-top: 2rem;
 }
 
@@ -517,7 +516,6 @@ ul.messages li {
 
 /* Form inputs */
 .login-form input, .registration-form input {
- /* width: 100%;*/
   padding: 0.75rem;
   border: none;
   border-radius: 4px;
@@ -897,4 +895,27 @@ form button:hover {
     padding: 1rem;
     max-width: 100%;
   }
+}
+
+/* Favorites Section in Management View */
+.management-container #inv-display {
+  margin-top: 1rem;
+}
+
+/* Favorite Toggle Button in Detail View */
+.vehicle-info form button {
+  padding: 0.75rem 1.5rem;
+  background-color: #00c3ff;
+  color: #000;
+  border: 1px solid #000;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 1rem;
+}
+
+.vehicle-info form button:hover {
+  background-color: #0099cc;
 }

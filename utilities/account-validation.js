@@ -1,3 +1,4 @@
+// This file contains validation rules for account registration, login, and update using express-validator and custom validation logic. It also includes middleware to check for errors and render appropriate views with error messages. 
 const utilities = require(".")
 const { body, validationResult } = require("express-validator")
 const validate = {}
@@ -8,27 +9,24 @@ const accountModel = require("../models/account-model")
 * ********************************* */
 validate.registationRules = () => {
   return [
-    // firstname is required and must be string
     body("account_firstname")
       .trim()
       .escape()
       .notEmpty()
       .isLength({ min: 1 })
-      .withMessage("Please provide a first name."), // on error this message is sent.
+      .withMessage("Please provide a first name."),
 
-    // lastname is required and must be string
     body("account_lastname")
       .trim()
       .escape()
       .notEmpty()
       .isLength({ min: 2 })
-      .withMessage("Please provide a last name."), // on error this message is sent.
+      .withMessage("Please provide a last name."),
 
-    // valid email is required and cannot already exist in the database
     body("account_email")
       .trim()
       .isEmail()
-      .normalizeEmail() // refer to validator.js docs
+      .normalizeEmail()
       .withMessage("A valid email is required.")
       .custom(async (account_email) => {
         const emailExists = await accountModel.checkExistingEmail(account_email)
@@ -37,7 +35,6 @@ validate.registationRules = () => {
         }
       }),
 
-    // password is required and must be strong password
     body("account_password")
       .trim()
       .notEmpty()
@@ -208,5 +205,26 @@ validate.checkPasswordUpdateData = async (req, res, next) => {
   }
   next()
 }
+
+//* **********************************
+//*  Add to Favorites Validation Rules
+validate.favoritesRules = () => {
+  return [
+    body("inv_id")
+      .trim()
+      .isInt()
+      .withMessage("Invalid vehicle ID.")
+  ];
+};
+
+validate.checkFavoritesData = async (req, res, next) => {
+  let errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    let nav = await utilities.getNav();
+    req.flash("notice", errors.array()[0].msg);
+    return res.redirect(`/inv/detail/${req.body.inv_id}`);
+  }
+  next();
+};
 
 module.exports = validate

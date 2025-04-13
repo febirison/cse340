@@ -1,10 +1,9 @@
-// This file contains the routes for account management, including login and registration.
-//  * ***************************** */
+// This file defines the routes for account management, including login, registration, and account updates.
 const express = require("express");
 const router = new express.Router();
 const accountController = require("../controllers/accountController");
 const utilities = require("../utilities");
-const regValidate = require('../utilities/account-validation');
+const validate = require('../utilities/account-validation');
 
 // Route to deliver the login view
 router.get("/login", utilities.handleErrors(accountController.buildLogin));
@@ -24,16 +23,16 @@ router.get("/logout", utilities.handleErrors(accountController.logout));
 // Process the registration data
 router.post(
     "/register",
-    regValidate.registationRules(),
-    regValidate.checkRegData,
+    validate.registationRules(), 
+    validate.checkRegData,
     utilities.handleErrors(accountController.registerAccount)
 );
 
 // Process the login request
 router.post(
     "/login",
-    regValidate.loginRules(),
-    regValidate.checkLoginData,
+    validate.loginRules(), 
+    validate.checkLoginData,
     utilities.handleErrors(accountController.accountLogin)
 );
 
@@ -41,8 +40,8 @@ router.post(
 router.post(
     "/update",
     utilities.checkLogin,
-    regValidate.accountUpdateRules(),
-    regValidate.checkAccountUpdateData,
+    validate.accountUpdateRules(), 
+    validate.checkAccountUpdateData,
     utilities.handleErrors(accountController.updateAccount)
 );
 
@@ -50,9 +49,27 @@ router.post(
 router.post(
     "/update-password",
     utilities.checkLogin,
-    regValidate.passwordUpdateRules(),
-    regValidate.checkPasswordUpdateData,
+    validate.passwordUpdateRules(), 
+    validate.checkPasswordUpdateData,
     utilities.handleErrors(accountController.updatePassword)
 );
 
-module.exports = router; // Export the router for use in server.js
+// Process adding a vehicle to favorites
+router.post(
+    "/add-favorite",
+    utilities.checkLogin,
+    validate.favoritesRules(), 
+    validate.checkFavoritesData,
+    utilities.handleErrors(accountController.addFavorite)
+);
+
+// Process removing a vehicle from favorites
+router.post(
+    "/remove-favorite",
+    utilities.checkLogin,
+    validate.favoritesRules(), 
+    validate.checkFavoritesData,
+    utilities.handleErrors(accountController.removeFavorite)
+);
+
+module.exports = router;

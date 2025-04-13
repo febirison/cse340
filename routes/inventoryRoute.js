@@ -10,11 +10,11 @@ router.get("/add-inventory", utilities.checkLogin, utilities.checkAccountType, u
 router.get("/", utilities.checkLogin, utilities.checkAccountType, utilities.handleErrors(invController.buildManagement));
 router.get("/add-classification", utilities.checkLogin, utilities.checkAccountType, utilities.handleErrors(invController.buildAddClassification));
 
-// In routes/inventoryRoute.js, before calling invController.buildDetailView:
+// Route to build vehicle detail view
 router.get("/detail/:inv_id", (req, res, next) => {
     console.log("Detail route hit for inv_id:", req.params.inv_id);
     next();
-}, utilities.handleErrors(invController.buildDetailView));
+}, utilities.handleErrors(invController.buildByInventoryId)); // Changed from buildDetailView to buildByInventoryId
 
 // Route to build inventory by classification view
 router.get("/type/:classificationId", utilities.handleErrors(invController.buildByClassificationId));
@@ -40,9 +40,6 @@ router.post("/update/",
   utilities.handleErrors(invController.updateInventory)
 );
 
-// Route to build vehicle detail view
-//router.get("/detail/:inv_id", invController.buildDetailView);
-
 // Route to build add vehicle view
 router.post("/add-classification",
   utilities.checkLogin,
@@ -61,4 +58,4 @@ router.post("/add-inventory",
   utilities.handleErrors(invController.addInventory)
 );
 
-module.exports = router; // Export the router for use in server.js
+module.exports = router;

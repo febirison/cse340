@@ -8,16 +8,16 @@ Util.handleErrors = fn => (req, res, next) => {
   Promise.resolve(fn(req, res, next)).catch(next);
 };
 
-/* ************************
- * Constructs the nav HTML unordered list
- ************************** */
+/* ****************************************
+*  Get Navigation Links
+* ************************************ */
 Util.getNav = async function (req, res, next) {
   try {
-    let data = await invModel.getClassifications()
-    let list = "<ul>"
-    list += '<li><a href="/" title="Home page">Home</a></li>'
+    let data = await invModel.getClassifications();
+    let list = "<ul>";
+    list += '<li><a href="/" title="Home page">Home</a></li>';
     data.rows.forEach((row) => {
-      list += "<li>"
+      list += "<li>";
       list +=
         '<a href="/inv/type/' +
         row.classification_id +
@@ -25,16 +25,16 @@ Util.getNav = async function (req, res, next) {
         row.classification_name +
         ' vehicles">' +
         row.classification_name +
-        "</a>"
-      list += "</li>"
-    })
-    list += "</ul>"
-    return list
+        "</a>";
+      list += "</li>";
+    });
+    list += "</ul>";
+    return list;
   } catch (error) {
     console.error("Error in getNav:", error);
     return "<ul><li>Error loading navigation</li></ul>";
   }
-}
+};
 
 /* **************************************
 * Build the classification view HTML
@@ -195,4 +195,4 @@ Util.checkAccountType = (req, res, next) => {
   }
 }
 
-module.exports = Util; // Export the utility functions for use in routes/inventoryRoute.js
+module.exports = Util; // Export the functions for use in routes/inventoryRoute.js

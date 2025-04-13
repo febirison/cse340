@@ -1,5 +1,6 @@
 const { request } = require("express");
 const invModel = require("../models/inventory-model");
+const accountModel = require("../models/account-model"); // Added to fetch favorites
 const utilities = require("../utilities/");
 const classificationModel = require("../models/classification-model");
 
@@ -24,38 +25,67 @@ invCont.buildByClassificationId = async function (req, res, next) {
 /* ***************************
  *  Build vehicle detail view
  * *************************** */
-invCont.buildDetailView = async function (req, res, next) {
-  const inv_id = req.params.inv_id;
-  // Retrieve the specific vehicle detail
-  const vehicle = await invModel.getInventoryById(inv_id);
-  
-  // Check if the vehicle exists
-  if (!vehicle) {
-    // Optionally, you could render a 404 page or call next with an error
-    return next(new Error("Vehicle not found"));
+/* ***************************
+ *  Build vehicle detail view
+ * *************************** */
+invCont.buildByInventoryId = async function buildByInventoryId(req, res, next) {
+  try {
+    const inv_id = parseInt(req.params.inv_id);
+    if (isNaN(inv_id)) {
+      return next({ status: 400, message: "Invalid vehicle ID." });
+    }
+
+    const vehicle = await invModel.getInventoryById(inv_id);
+    if (!vehicle) {
+      return next({ status: 404, message: "Vehicle not found." });
+    }
+
+    let favorites = [];
+    if (res.locals.loggedin) {
+      if (!res.locals.accountData || !res.locals.accountData.account_id) {
+        return next({ status: 500, message: "User data not available." });
+      }
+      const favoritesResult = await accountModel.getFavoritesByAccountId(res.locals.accountData.account_id);
+      if (typeof favoritesResult === 'string') {
+        console.error("Error fetching favorites:", favoritesResult);
+        favorites = [];
+      } else {
+        favorites = favoritesResult;
+      }
+    }
+
+    const detail = await utilities.buildDetailView(vehicle, req, res, next);
+    let nav = await utilities.getNav(req, res, next);
+
+    res.render("./inventory/detail", {
+      title: `${vehicle.inv_year} ${vehicle.inv_make} ${vehicle.inv_model} Details`,
+      nav,
+      detail,
+      inv_id: vehicle.inv_id,
+      inv_year: vehicle.inv_year,
+      inv_make: vehicle.inv_make,
+      inv_model: vehicle.inv_model,
+      inv_price: vehicle.inv_price,
+      inv_miles: vehicle.inv_miles,
+      inv_color: vehicle.inv_color,
+      inv_description: vehicle.inv_description,
+      inv_image: vehicle.inv_image,
+      favorites,
+    });
+  } catch (error) {
+    console.error("Error in buildByInventoryId:", error.stack);
+    next({ status: 500, message: "Server error while loading vehicle details: " + error.message });
   }
-  
-  // Build the detail HTML using a custom utility function
-  const detail = await utilities.buildDetailView(vehicle);
-  let nav = await utilities.getNav();
-  const title = `${vehicle.inv_make} ${vehicle.inv_model} Details`;
-  
-  // Render the detail view, passing the title, navigation, and detail HTML
-  res.render("./inventory/detail", {
-    title,
-    nav,
-    detail,
-  });
-};
+}
 
 // Add to invCont object to export the function
 invCont.buildManagement = async function(req, res, next) {
   let nav = await utilities.getNav();
-  const classificationSelect = await utilities.buildClassificationList(); // Add classification select list
+  const classificationSelect = await utilities.buildClassificationList();
   res.render("./inventory/management", {
     title: "Inventory Management",
     nav,
-    classificationSelect, // Pass to the view
+    classificationSelect,
     errors: null,
   });
 };
@@ -342,5 +372,7 @@ invCont.deleteInventory = async function (req, res, next) {
     });
   }
 };
+
+
 
 module.exports = invCont; // Export the controller functions for use in routes/inventoryRoute.js

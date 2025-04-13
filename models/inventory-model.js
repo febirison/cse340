@@ -33,7 +33,7 @@ async function getInventoryByClassificationId(classification_id, req, res, next)
 /* ***************************
  *  Get a specific vehicle detail by inventory id
  * *************************** */
-async function getInventoryById(inv_id, req, res, next) {
+async function getInventoryById(inv_id) {
   try {
     const data = await pool.query(
       `SELECT * FROM public.inventory AS i
@@ -42,9 +42,10 @@ async function getInventoryById(inv_id, req, res, next) {
        WHERE i.inv_id = $1`,
       [inv_id]
     );
-    return data.rows[0];
+    return data.rows[0]; // Returns undefined if no vehicle is found
   } catch (error) {
     console.error("getInventoryById error: " + error);
+    throw new Error("Failed to fetch vehicle data: " + error.message);
   }
 }
 

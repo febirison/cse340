@@ -288,3 +288,30 @@ UPDATE inventory
 SET  
   inv_image = REPLACE(inv_image, '/images/', '/images/vehicles/'),  
   inv_thumbnail = REPLACE(inv_thumbnail, '/images/', '/images/vehicles/'); 
+
+-- ***************************************************
+-- Task 7: Create Favorites Table
+-- ***************************************************
+-- Creates a table to store favorite vehicles for each account
+CREATE TABLE IF NOT EXISTS favorites (
+    favorite_id SERIAL PRIMARY KEY,
+    account_id INTEGER NOT NULL,
+    inv_id INTEGER NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (account_id) REFERENCES account(account_id),
+    FOREIGN KEY (inv_id) REFERENCES inventory(inv_id),
+    UNIQUE (account_id, inv_id)
+);
+
+-- ***************************************************
+-- Task 8: Create Reviews Table
+CREATE TABLE IF NOT EXISTS reviews (
+    review_id SERIAL PRIMARY KEY,
+    account_id INTEGER NOT NULL,
+    inv_id INTEGER NOT NULL,
+    rating INTEGER NOT NULL CHECK (rating >= 1 AND rating <= 5),
+    comment TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (account_id) REFERENCES account(account_id),
+    FOREIGN KEY (inv_id) REFERENCES inventory(inv_id)
+);

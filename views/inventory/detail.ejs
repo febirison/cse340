@@ -1,13 +1,34 @@
 <!-- Content Heading Section -->
-    <% if (title) { %>
-      <h1><%= title %></h1>
-    <% } else { %>
-      <% res.redirect('/'); %>
-    <% } %>
+<% if (title) { %>
+  <h1><%= title %></h1>
+<% } else { %>
+  <% res.redirect('/'); %>
+<% } %>
 
-    <%# messages() %>
+<%- messages() %>
 
-    <!-- Vehicle Detail Section -->
-    <section class="vehicle-detail-container">
-      <%- detail %>
-    </section>
+<!-- Vehicle Detail Section -->
+<section class="vehicle-detail-container">
+  <h2>Vehicle Details</h2>
+  <div class="vehicle-detail-row">
+    <div class="vehicle-image">
+      <img src="<%= inv_image %>" alt="<%= inv_make %> <%= inv_model %>">
+    </div>
+    <div class="vehicle-info">
+      <p><strong>Price:</strong> $<%= new Intl.NumberFormat('en-US').format(inv_price) %></p>
+      <p><strong>Year:</strong> <%= inv_year %></p>
+      <p><strong>Make:</strong> <%= inv_make %></p>
+      <p><strong>Model:</strong> <%= inv_model %></p>
+      <p><strong>Miles:</strong> <%= new Intl.NumberFormat('en-US').format(inv_miles) %></p>
+      <p><strong>Color:</strong> <%= inv_color %></p>
+      <p><strong>Description:</strong> <%= inv_description %></p>
+      <% if (locals.loggedin) { %>
+        <% const isFavorited = favorites && favorites.some(fav => fav.inv_id === inv_id); %>
+        <form action="<%= isFavorited ? '/account/remove-favorite' : '/account/add-favorite' %>" method="post">
+          <input type="hidden" name="inv_id" value="<%= inv_id %>">
+          <button type="submit"><%= isFavorited ? 'Remove from Favorites' : 'Add to Favorites' %></button>
+        </form>
+      <% } %>
+    </div>
+  </div>
+</section>
